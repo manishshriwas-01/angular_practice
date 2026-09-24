@@ -1,0 +1,78 @@
+<h1>Recipe form</h1>
+<form [formGroup]="recipeForm" (ngSubmit)="submitForm()">
+
+  <label>Recipe Title</label>
+  <input type="text" formControlName="title">
+
+
+
+  @if (recipeForm.controls.title.touched &&
+       recipeForm.controls.title.hasError('required')) {
+    <p>Recipe title is required.</p>
+  }
+
+  @if (recipeForm.controls.title.touched &&
+       recipeForm.controls.title.hasError('minlength')) {
+    <p>Recipe title must be at least 3 characters.</p>
+  }
+<br>
+
+  <label>Category</label>
+  <input type="text" formControlName="category">
+
+  @if (recipeForm.controls.category.touched &&
+       recipeForm.controls.category.hasError('required')) {
+    <p>Category is required.</p>
+  }
+  <br>
+
+
+  <label>Description</label>
+  <textarea formControlName="description"></textarea>
+
+  @if (recipeForm.controls.description.touched &&
+       recipeForm.controls.description.hasError('required')) {
+    <p>Description is required.</p>
+  }
+  <br>
+
+
+  <!-- Nested FormGroup -->
+  <div formGroupName="author">
+
+    <h3>Author Details</h3>
+
+    <label>Author Name</label>
+    <input type="text" formControlName="name">
+
+    @if (recipeForm.controls.author.controls.name.touched &&
+         recipeForm.controls.author.controls.name.hasError('required')) {
+      <p>Author name is required.</p>
+    }
+
+
+    <label>Author Email</label>
+    <input type="email" formControlName="email">
+
+    @if (recipeForm.controls.author.controls.email.touched &&
+         recipeForm.controls.author.controls.email.hasError('required')) {
+      <p>Author email is required.</p>
+    }
+
+    @if (recipeForm.controls.author.controls.email.touched &&
+         recipeForm.controls.author.controls.email.hasError('email')) {
+      <p>Please enter a valid email.</p>
+    }
+
+  </div>
+
+
+  <br>
+
+  <button
+    type="submit"
+    [disabled]="recipeForm.invalid">
+    Create Recipe
+  </button>
+
+</form>
