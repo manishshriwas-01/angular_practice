@@ -16,6 +16,8 @@ export class Login {
 
   private fb = inject(FormBuilder);
 
+  isEditing =false;
+
   loginForm = this.fb.group({
 
     email: [
@@ -32,11 +34,44 @@ export class Login {
         Validators.required,
         Validators.minLength(6)
       ]
-    ]
+    ],
+  
 
   });
 
-  submitForm() {
+  userData={
+    email:'w@gmail.com',
+    password:'1234567'
+  };
+
+  constructor() {
+
+  this.loginForm.valueChanges.subscribe(value => {
+    console.log('Form Value:', value);
+  });
+
+  this.loginForm.statusChanges.subscribe(status => {
+    console.log('Form Status:', status);
+  });
+
+  this.loginForm.controls.email.valueChanges.subscribe(value => {
+    console.log('Email Changed:', value);
+  });
+
+}
+
+  editProfile(){
+    this.loginForm.patchValue({
+      email:this.userData.email,
+      password:this.userData.password
+    });
+    this.isEditing=true;
+  }
+
+  resetForm(){
+    this.loginForm.reset();
+  }
+  saveProfile() {
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -44,5 +79,6 @@ export class Login {
     }
 
     console.log(this.loginForm.value);
+    this.isEditing=false;
   }
 }

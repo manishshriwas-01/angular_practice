@@ -1,37 +1,104 @@
-<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+<div class="profile-container">
 
-  <label>Email</label>
-  <input type="email" formControlName="email">
+  <h2>Profile</h2>
 
-  @if (loginForm.controls.email.touched &&
-       loginForm.controls.email.hasError('required')) {
-    <p>Email is required</p>
+  @if (!isEditing) {
+
+
+
+    <div class="profile-info">
+      <p>
+        <strong>Email:</strong>
+        {{ userData.email }}
+      </p>
+
+      <p>
+        <strong>Password:</strong>
+        {{ userData.password }}
+      </p>
+    </div>
+
+    <button type="button" (click)="editProfile()">
+      Edit
+    </button>
+
+  } @else {
+
+
+    <form [formGroup]="loginForm" (ngSubmit)="saveProfile()">
+
+      <h3>Edit Profile</h3>
+
+   
+      <div>
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+        >
+
+        @if (
+          loginForm.controls.email.touched &&
+          loginForm.controls.email.hasError('required')
+        ) {
+          <p>Email is required</p>
+        }
+
+        @if (
+          loginForm.controls.email.touched &&
+          loginForm.controls.email.hasError('email')
+        ) {
+          <p>Please enter a valid email</p>
+        }
+      </div>
+
+      <br>
+
+     
+      <div>
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+        >
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.hasError('required')
+        ) {
+          <p>Password is required</p>
+        }
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.hasError('minlength')
+        ) {
+          <p>Password must be at least 6 characters</p>
+        }
+      </div>
+
+      <br>
+
+     
+      <button type="submit">
+        Save
+      </button>
+
+      <button
+        type="button"
+        (click)="isEditing = false"
+      >
+        Cancel
+      </button>
+
+      <button type="button" (click)="resetForm()">Reset</button>
+
+    </form>
+
   }
 
-  @if (loginForm.controls.email.touched &&
-       loginForm.controls.email.hasError('email')) {
-    <p>Please enter a valid email</p>
-  }
-
-  <br>
-
-  <label>Password</label>
-  <input type="password" formControlName="password">
-
-  @if (loginForm.controls.password.touched &&
-       loginForm.controls.password.hasError('required')) {
-    <p>Password is required</p>
-  }
-
-  @if (loginForm.controls.password.touched &&
-       loginForm.controls.password.hasError('minlength')) {
-    <p>Password must be at least 6 characters</p>
-  }
-
-  <br>
-
-  <button type="submit">
-    Login
-  </button>
-
-</form>
+</div>

@@ -1,0 +1,415 @@
+<div class="container">
+
+  <h1>Registration Form</h1>
+
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="submit()"
+  >
+
+
+  
+
+    <section>
+
+      <h2>Personal Information</h2>
+
+      <div formGroupName="personal">
+
+
+
+        <div class="field">
+
+          <label>First Name</label>
+
+          <input
+            type="text"
+            formControlName="firstName"
+          >
+
+          @if (
+            registerForm.controls.personal.controls.firstName.touched &&
+            registerForm.controls.personal.controls.firstName.hasError('required')
+          ) {
+
+            <small>
+              First name is required.
+            </small>
+
+          }
+
+        </div>
+
+
+
+
+        <div class="field">
+
+          <label>Last Name</label>
+
+          <input
+            type="text"
+            formControlName="lastName"
+          >
+
+          @if (
+            registerForm.controls.personal.controls.lastName.touched &&
+            registerForm.controls.personal.controls.lastName.hasError('required')
+          ) {
+
+            <small>
+              Last name is required.
+            </small>
+
+          }
+
+        </div>
+
+
+
+
+        <div class="field">
+
+          <label>Email</label>
+
+          <input
+            type="email"
+            formControlName="email"
+          >
+
+
+          @if (
+            registerForm.controls.personal.controls.email.touched &&
+            registerForm.controls.personal.controls.email.hasError('required')
+          ) {
+
+            <small>
+              Email is required.
+            </small>
+
+          }
+
+
+          @if (
+            registerForm.controls.personal.controls.email.touched &&
+            registerForm.controls.personal.controls.email.hasError('email')
+          ) {
+
+            <small>
+              Enter a valid email.
+            </small>
+
+          }
+
+        </div>
+
+
+
+
+        <div class="field">
+
+          <label>Phone</label>
+
+          <input
+            type="text"
+            formControlName="phone"
+          >
+
+
+          @if (
+            registerForm.controls.personal.controls.phone.touched &&
+            registerForm.controls.personal.controls.phone.hasError('required')
+          ) {
+
+            <small>
+              Phone number is required.
+            </small>
+
+          }
+
+
+          @if (
+            registerForm.controls.personal.controls.phone.touched &&
+            registerForm.controls.personal.controls.phone.hasError('pattern')
+          ) {
+
+            <small>
+              Phone number must contain exactly 10 digits.
+            </small>
+
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+
+    <section>
+
+      <h2>Account Information</h2>
+
+
+      <div formGroupName="account">
+
+
+
+
+        <div class="field">
+
+          <label>Password</label>
+
+          <input
+            type="password"
+            formControlName="password"
+          >
+
+
+          @if (
+            registerForm.controls.account.controls.password.touched &&
+            registerForm.controls.account.controls.password.hasError('required')
+          ) {
+
+            <small>
+              Password is required.
+            </small>
+
+          }
+
+
+          @if (
+            registerForm.controls.account.controls.password.touched &&
+            registerForm.controls.account.controls.password.hasError('minlength')
+          ) {
+
+            <small>
+              Password must contain at least 8 characters.
+            </small>
+
+          }
+
+        </div>
+
+
+
+
+        <div class="field">
+
+          <label>Confirm Password</label>
+
+          <input
+            type="password"
+            formControlName="confirmPassword"
+          >
+
+
+          @if (
+            registerForm.controls.account.controls.confirmPassword.touched &&
+            registerForm.controls.account.controls.confirmPassword.hasError('required')
+          ) {
+
+            <small>
+              Please confirm your password.
+            </small>
+
+          }
+
+        </div>
+
+
+
+        @if (
+          registerForm.controls.account.touched &&
+          registerForm.controls.account.hasError('passwordMismatch')
+        ) {
+
+          <small>
+            Passwords do not match.
+          </small>
+
+        }
+
+      </div>
+
+    </section>
+
+
+
+
+
+    <section>
+
+      <h2>Address</h2>
+
+
+      <div formGroupName="address">
+
+
+
+
+        <div class="field">
+
+          <label>City</label>
+
+          <input
+            type="text"
+            formControlName="city"
+          >
+
+
+          @if (
+            registerForm.controls.address.controls.city.touched &&
+            registerForm.controls.address.controls.city.hasError('required')
+          ) {
+
+            <small>
+              City is required.
+            </small>
+
+          }
+
+        </div>
+
+
+    
+
+        <div class="field">
+
+          <label>State</label>
+
+          <input
+            type="text"
+            formControlName="state"
+          >
+
+
+          @if (
+            registerForm.controls.address.controls.state.touched &&
+            registerForm.controls.address.controls.state.hasError('required')
+          ) {
+
+            <small>
+              State is required.
+            </small>
+
+          }
+
+        </div>
+
+
+
+        <div class="field">
+
+          <label>Pincode</label>
+
+          <input
+            type="text"
+            formControlName="pincode"
+          >
+
+
+          @if (
+            registerForm.controls.address.controls.pincode.touched &&
+            registerForm.controls.address.controls.pincode.hasError('required')
+          ) {
+
+            <small>
+              Pincode is required.
+            </small>
+
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <section>
+
+      <h2>Skills</h2>
+
+
+      <div formArrayName="skills">
+
+        @for (
+          skill of skills.controls;
+          track $index
+        ) {
+
+          <div class="skill-row">
+
+            <input
+              type="text"
+              [formControlName]="$index"
+              placeholder="Enter skill"
+            >
+
+
+            <button
+              type="button"
+              (click)="removeSkill($index)"
+            >
+              Remove
+            </button>
+
+
+            @if (
+              skill.touched &&
+              skill.hasError('required')
+            ) {
+
+              <small>
+                Skill is required.
+              </small>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <button
+        type="button"
+        (click)="addSkill()"
+      >
+        Add Skill
+      </button>
+
+    </section>
+
+
+
+  
+
+    <div class="actions">
+
+      <button
+        type="button"
+        (click)="editUser()"
+      >
+        Load Existing User
+      </button>
+
+
+      <button
+        type="submit"
+      >
+        Register
+      </button>
+
+    </div>
+
+
+  </form>
+
+</div>

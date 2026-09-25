@@ -1,0 +1,36 @@
+<h2>form array</h2>
+
+<form [formGroup]="userForm">
+
+  <div formArrayName="phones">
+
+    @for (phone of phones.controls; track $index) {
+
+      <div>
+
+        <input
+          type="text"
+          [formControlName]="$index"
+        >
+
+        <button
+          type="button"
+          (click)="removePhone($index)"
+        >
+          Remove
+        </button>
+
+      </div>
+
+    }
+
+  </div>
+
+  <button
+    type="button"
+    (click)="addPhone()"
+  >
+    Add Phone
+  </button>
+
+</form>
